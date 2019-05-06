@@ -44,8 +44,7 @@ function App() {
   ];
   return (
     <div>
-            <ContactList data={contacts}/>
-   
+      <ContactList data={contacts}/>
     </div>
   );
 }
