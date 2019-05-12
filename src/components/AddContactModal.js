@@ -1,6 +1,6 @@
-var React = require('react');
+import React, { Component } from 'react'
 
-class EditContactModal extends  React.Component {
+class AddContactModal extends  Component {
 
 	render() {
 		return(
@@ -39,4 +39,4 @@ class EditContactModal extends  React.Component {
 	
 }
 
-module.exports = EditContactModal;
+export default   AddContactModal;

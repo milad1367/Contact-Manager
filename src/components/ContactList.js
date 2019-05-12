@@ -1,7 +1,8 @@
-var React = require('react');
-var Contact = require('./contact');
 
-class ContactList extends React.Component{
+import React, { Component } from 'react'
+import Contact from './Contact'
+
+class ContactList extends Component{
 	render() {
         var contacts=[];
         contacts = this.props.data.map((_contact) =>
@@ -13,4 +14,4 @@ class ContactList extends React.Component{
 	}
 };
 
-module.exports = ContactList;
+export default  ContactList;
