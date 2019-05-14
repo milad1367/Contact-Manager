@@ -2,21 +2,21 @@ import React, { Component } from 'react'
 //import './App.css';
 import  ContactList  from './ContactList';
 import EditContactModal from './EditContactModal';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
+const Get_Contacts = gql`
+query GetContacts {
+  contacts @client {
+    id
+    name
+    phone
+    email
+  }
+}
+`;
 class App extends Component {
-  contacts = [
-    {
-      id: 1,
-      name : 'Terrence S. Hatfield',
-      phone: '651-603-1723',
-      email: 'TerrenceSHatfield@rhyta.com'
-    },
-    {
-      id: 2,
-      name : 'Chris M. Manning',
-      phone: '513-307-5859',
-      email: 'ChrisMManning@dayrep.com'
-    }
-  ];
+
   render() {
 
     return (
@@ -26,7 +26,12 @@ class App extends Component {
             <EditContactModal />
           </div>
         </div>
-        <ContactList data={this.contacts}/>
+        <Query query= {Get_Contacts}>
+           {({data : {contacts}}) => (
+           <ContactList data={contacts}/>
+           )}
+           
+        </Query>
       </div>
     );
   }

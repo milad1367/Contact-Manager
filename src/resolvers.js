@@ -1,50 +1,72 @@
 import gql from 'graphql-tag';
 var nextTodoId = 1;
 export const defaults = {
-  showEditModal : false,
-  showCreateModal : false,
-  currentContactId : null
+    contacts : [
+        {
+        id: 1,
+        name : 'Terrence S. Hatfield',
+        phone: '651-603-1723',
+        email: 'TerrenceSHatfield@rhyta.com',
+        __typename: 'ContactItem'
+        },
+        {
+        id: 2,
+        name : 'Chris M. Manning',
+        phone: '513-307-5859',
+        email: 'ChrisMManning@dayrep.com',
+        __typename: 'ContactItem'
+        }
+    ],
+    showEditModal : false,
+    showCreateModal : false,
+    selectedContactId: "",
+    selectedContact : {
+      __typename: 'ContactItem',
+      id: null,
+      name : '',
+      phone: '',
+      email: '',
+    }
+
 };
 
 export const resolvers = {
+
   Mutation: {
-    openEditModal: (_, { id }, { cache }) => {
+    openEditModal: (_, variables, { cache }) => {
+      const id = `ContactItem:${variables.id}`;
+      const fragment = gql`
+         fragment selectedContact on ContactItem {
+             id
+             name
+             phone
+             email
+         }
+      `;
+      const _selectedContact = cache.readFragment({fragment,id});
+      console.log(_selectedContact);
+      cache.writeData({data:{showEditModal: true,selectedContact: _selectedContact }});
+      return null
       
     },
-    addContact: (_, { text }, { cache }) => {
-      const query = gql`
-        query GetContacts {
-          contacts @client {
+    editContact: (parent,variables, {cache}) => {
+        const id = `ContactItem:${variables.id}`;
+        console.log("log",variables);
+        const fragment = gql`
+        fragment selectedContact on ContactItem {
             id
-            text
-            completed
-          }
+            name
+            phone
+            email
         }
-      `;
-      const previous = cache.readQuery({ query });
-      const newTodo = {
-        id: nextTodoId++,
-        text,
-        completed: false,
-        __typename: 'TodoItem',
-      };
-      const data = {
-        todos: previous.todos.concat([newTodo]),
-      };
-      cache.writeData({ data });
-      return newTodo;
-    },
-    toggleTodo: (_, variables, { cache }) => {
-      const id = `TodoItem:${variables.id}`;
-      const fragment = gql`
-        fragment completeTodo on TodoItem {
-          completed
-        }
-      `;
-      const todo = cache.readFragment({ fragment, id });
-      const data = { ...todo, completed: !todo.completed };
-      cache.writeData({ id, data });
-      return null;
-    },
+     `;
+     const _selectedContact = cache.readFragment({fragment,id});
+     const data = {..._selectedContact,name: variables.name,email: variables.email, phone: variables.phone }
+       cache.writeFragment({ fragment, id, data });
+
+        return null
+
+    }
+
   },
 };
