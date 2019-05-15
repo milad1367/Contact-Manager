@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-var nextTodoId = 1;
+
+
 export const defaults = {
     contacts : [
         {
@@ -49,6 +50,31 @@ export const resolvers = {
       return null
       
     },
+    addContact: (parent,variables, {cache}) => {
+      const query = gql`
+        query GetContacts {
+          contacts  @client {
+            id
+            name
+            phone
+            email
+
+          }
+        }
+      `; 
+      const name = variables.name;
+      const email = variables.email;
+      const phone = variables.phone;
+      const previous = cache.readQuery({query});
+      const newId = previous.contacts[previous.contacts.length - 1].id + 1 ;
+      const newContact = { id: newId, name,phone,email, __typename: 'ContactItem' };
+      const data = {
+        contacts: [...previous.contacts,newContact],
+
+      };
+      cache.writeQuery({query, data});
+      
+    },
     editContact: (parent,variables, {cache}) => {
         const id = `ContactItem:${variables.id}`;
         console.log("log",variables);
@@ -63,7 +89,7 @@ export const resolvers = {
      const _selectedContact = cache.readFragment({fragment,id});
      const data = {..._selectedContact,name: variables.name,email: variables.email, phone: variables.phone }
        cache.writeFragment({ fragment, id, data });
-
+   
         return null
 
     }

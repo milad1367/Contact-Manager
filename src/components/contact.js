@@ -33,7 +33,7 @@ class Contact extends Component{
 					<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
 						onClick={openEditModal} 
 					>
-						test
+						edit contact
 					</button>
 					)}
 				</Mutation>
