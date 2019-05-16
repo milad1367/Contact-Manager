@@ -47,7 +47,7 @@ export const resolvers = {
       const _selectedContact = cache.readFragment({fragment,id});
       console.log(_selectedContact);
       cache.writeData({data:{showEditModal: true,selectedContact: _selectedContact }});
-      return null
+      return true
       
     },
     addContact: (parent,variables, {cache}) => {
