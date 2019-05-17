@@ -15,30 +15,39 @@ const OPEN_EDIT_MODAL = gql`
 class Contact extends Component{
 	render() {
 		var contact = this.props.contact;
+		console.log(contact);
 		var id = contact.id;
         //<a href="#" onClick={this._openEditModal} className="secondary-content">  <i className="material-icons">edit</i></a>
 		return(
-			<li className="collection-item avatar">
-			
-				<img src={contact.avatar} className="circle" />
-				name:<span className="title">{contact.name}</span>
-				<p>
-				   Phone Number: {contact.phone} <br />
-				   Email: {contact.email}
-				</p>
-
-
-				<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>
-					{openEditModal => (
-					<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-						onClick={openEditModal} 
-					>
-						edit contact
-					</button>
-					)}
-				</Mutation>
-				
-			</li>
+			  <div className="row">
+				  <div className="col-8">
+						<div className="row">
+						  <div className="col-3">
+							  <img className="rounded-circle"  src={process.env.PUBLIC_URL + contact.img}  />
+							</div>
+							<div className="col-8">
+								<div className="mt-4">
+									<span className="font-weight-bold">{contact.name}</span>
+									<p>
+										Phone Number: {contact.phone} <br />
+										Email: {contact.email}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="col-4 text-right">
+						<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>
+							{openEditModal => (
+							<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#editContactModal"
+								onClick={openEditModal} 
+							>
+								Edit Contact
+							</button>
+							)}
+						</Mutation>
+					</div>
+				</div>
 		);
 	
 	}

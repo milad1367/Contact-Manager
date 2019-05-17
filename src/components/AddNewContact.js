@@ -40,11 +40,9 @@ class AddNewContact extends Component {
   render() {
     return (
 
-      <div>
-        <Button href="#" onClick={this.openModal}>
-          Add New Contact
-        </Button>
-
+      <div className="my-5">
+        <button type="button" onClick={this.openModal} className="btn btn-success">Add New Contact</button>
+        
         <Modal show={this.state.showModal} onHide={this.closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Contact</Modal.Title>

@@ -8,6 +8,7 @@ export const defaults = {
         name : 'Terrence S. Hatfield',
         phone: '651-603-1723',
         email: 'TerrenceSHatfield@rhyta.com',
+        img: 'images/faces/1.jpg',
         __typename: 'ContactItem'
         },
         {
@@ -15,6 +16,8 @@ export const defaults = {
         name : 'Chris M. Manning',
         phone: '513-307-5859',
         email: 'ChrisMManning@dayrep.com',
+        img: 'images/faces/2.jpg',
+
         __typename: 'ContactItem'
         }
     ],
@@ -27,6 +30,7 @@ export const defaults = {
       name : '',
       phone: '',
       email: '',
+      img: ''
     }
 
 };
@@ -58,6 +62,7 @@ export const resolvers = {
             name
             phone
             email
+            img
 
           }
         }
@@ -65,9 +70,11 @@ export const resolvers = {
       const name = variables.name;
       const email = variables.email;
       const phone = variables.phone;
+      const img = 'images/faces/' + Math.floor(Math.random() * (15-1) + 1) + '.jpg';
+
       const previous = cache.readQuery({query});
       const newId = previous.contacts[previous.contacts.length - 1].id + 1 ;
-      const newContact = { id: newId, name,phone,email, __typename: 'ContactItem' };
+      const newContact = { id: newId, name,phone,email,img, __typename: 'ContactItem' };
       const data = {
         contacts: [...previous.contacts,newContact],
 
