@@ -19,10 +19,14 @@ class AddNewContact extends Component {
     this.inputPhone = React.createRef();
     this.inputEmail = React.createRef();
     this.state = {
-      showModal: false
+      showModal: false,
+      nameAlert: false,
+      emailAlert: false,
+      phoneAlert: false
     }
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.checkValidate = this.checkValidate.bind(this);
   }
 
 
@@ -30,7 +34,29 @@ class AddNewContact extends Component {
     this.inputName.current.value = "";
     this.inputPhone.current.value = "";
     this.inputEmail.current.value = "";
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, nameAlert: false,emailAlert: false,phoneAlert: false });
+  }
+  checkValidate() {
+    var isValid = true;
+    this.setState({ nameAlert: false,emailAlert: false,phoneAlert: false });
+
+    if(!this.inputName.current.value.length) {
+      this.setState({nameAlert:true});
+      isValid = false;
+    }
+    if(!this.inputPhone.current.value.length) {
+      this.setState({emailAlert:true});
+      isValid = false;
+    }
+    if(!this.inputEmail.current.value.length) {
+      this.setState({phoneAlert:true});
+      isValid = false;
+    }
+    if(!isValid) {
+      return false
+    }
+    return true   
+
   }
 
   openModal() {
@@ -53,27 +79,48 @@ class AddNewContact extends Component {
                 <div className="modal-body">
                   <div className="form-group">
                     <label htmlFor="fullName">Full name</label>
-                    <input type="text" className="form-control" id="fullName" aria-describedby="fullName" placeholder="Full Name" ref={this.inputName} />
+                    <input type="text" required className="form-control" id="fullName" aria-describedby="fullName" placeholder="Full Name" ref={this.inputName} />
+                    {this.state.nameAlert ? 
+                      <div className="alert alert-danger" role="alert">
+                        Name is requird!
+                      </div> : null
+                    }
                   </div>
                   <div className="form-group">
                     <label htmlFor="tel">Phone Number</label>
                     <input type="tel" className="form-control" id="tel" aria-describedby="tel" placeholder="Phone Number" ref={this.inputPhone} />
+                    {this.state.phoneAlert ? 
+                      <div className="alert alert-danger" role="alert">
+                        Phone number is requird!
+                      </div> : null
+                    }
                   </div>
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" className="form-control" id="email" aria-describedby="email" placeholder="Your Email" ref={this.inputEmail} />
+                    {this.state.emailAlert ? 
+                      <div className="alert alert-danger" role="alert">
+                        Email is required!
+                      </div> : null
+                    }
                   </div>
                 </div>
                 
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-secondary" onClick={() => {this.closeModal();}} data-dismiss="modal">Close</button>
                   <Mutation mutation={ADD_CONTACT}>
                   {addContact => {
                     return (
                       <a className="btn btn-primary" onClick={(e) => { 
                           e.preventDefault();
-                          addContact({variables: {name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
-                          this.closeModal();
+                          if(this.checkValidate()) {
+                            addContact({variables: {name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
+                            this.closeModal();
+                          }
+                          else {
+                            return false
+                          }
+
                         }}  
                         >Save changes
                       </a>
