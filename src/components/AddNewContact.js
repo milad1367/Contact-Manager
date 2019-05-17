@@ -45,11 +45,11 @@ class AddNewContact extends Component {
       isValid = false;
     }
     if(!this.inputPhone.current.value.length) {
-      this.setState({emailAlert:true});
+      this.setState({phoneAlert:true});
       isValid = false;
     }
     if(!this.inputEmail.current.value.length) {
-      this.setState({phoneAlert:true});
+      this.setState({emailAlert:true});
       isValid = false;
     }
     if(!isValid) {
@@ -79,7 +79,7 @@ class AddNewContact extends Component {
                 <div className="modal-body">
                   <div className="form-group">
                     <label htmlFor="fullName">Full name</label>
-                    <input type="text" required className="form-control" id="fullName" aria-describedby="fullName" placeholder="Full Name" ref={this.inputName} />
+                    <input type="text"  className="form-control" id="fullName" aria-describedby="fullName" placeholder="Full Name" ref={this.inputName} />
                     {this.state.nameAlert ? 
                       <div className="alert alert-danger" role="alert">
                         Name is requird!

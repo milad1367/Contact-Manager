@@ -33,6 +33,13 @@ class EditContactModal extends React.Component {
         this.modal = React.createRef();
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.checkValidate = this.checkValidate.bind(this);
+
+        this.state = {
+            nameAlert: false,
+            emailAlert: false,
+            phoneAlert: false
+          }
     }
     hideModal = () => {
       $(this.modal.current).modal('hide');
@@ -40,6 +47,28 @@ class EditContactModal extends React.Component {
     }
     showModal = () => {
         $(this.modal.current).modal('show');
+    }
+    checkValidate() {
+        var isValid = true;
+        this.setState({ nameAlert: false,emailAlert: false,phoneAlert: false });
+    
+        if(!this.inputName.current.value.length) {
+          this.setState({nameAlert:true});
+          isValid = false;
+        }
+        if(!this.inputPhone.current.value) {
+          this.setState({phoneAlert:true});
+          isValid = false;
+        }
+        if(!this.inputEmail.current.value.length) {
+          this.setState({emailAlert:true});
+          isValid = false;
+        }
+        if(!isValid) {
+          return false
+        }
+        return true   
+    
     }
     render() {
         return (
@@ -61,30 +90,46 @@ class EditContactModal extends React.Component {
                                     </div>
                                     <form key={data.selectedContact.id}>
                                         <div className="modal-body">
-                                            <input 
-                                                type="text" 
-                                                defaultValue={data.selectedContact.name}
-                                                ref={this.inputName}
-                                            />
-                                            <input 
-                                                type="text" 
-                                                defaultValue={data.selectedContact.phone}
-                                                ref={this.inputPhone}
-                                            />
-                                            <input 
-                                                type="text" 
-                                                defaultValue={data.selectedContact.email}
-                                                ref={this.inputEmail}
-                                            />
+                                            <div className="form-group">
+                                                <label htmlFor="fullName">Full name</label>
+                                                <input type="text" className="form-control" id="fullName" aria-describedby="fullName" placeholder="Full Name" defaultValue={data.selectedContact.name}
+                                                ref={this.inputName} />
+                                                {this.state.nameAlert ? 
+                                                <div className="alert alert-danger" role="alert">
+                                                    Name is requird!
+                                                </div> : null
+                                                }
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="tel">Phone Number</label>
+                                                <input type="tel" className="form-control" defaultValue={data.selectedContact.phone} id="tel"  aria-describedby="tel" placeholder="Phone Number" ref={this.inputPhone} />
+                                                {this.state.phoneAlert ? 
+                                                    <div className="alert alert-danger" role="alert">
+                                                    Phone number is requird!
+                                                    </div> : null
+                                                }
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email</label>
+                                                <input type="email" className="form-control" id="email" aria-describedby="email" defaultValue={data.selectedContact.email} placeholder="Your Email" ref={this.inputEmail} />
+                                                {this.state.emailAlert ? 
+                                                    <div className="alert alert-danger" role="alert">
+                                                    Email is required!
+                                                    </div> : null
+                                                }
+                                            </div>
                                         </div>
                                         <div className="modal-footer">
                                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <Mutation mutation={EDIT_CONTACT}>
                                             {editContact => {
                                                 return (
-                                                    <a onClick={() => { 
-                                                        editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
-                                                        this.hideModal();
+                                                    <a onClick={() => {
+                                                        if(this.checkValidate()) { 
+                                                            editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
+                                                            this.hideModal();
+                                                        }
+                                                        return false
                                                         }
                                                     }  
                                                     className="btn btn-primary">Save changes</a>
