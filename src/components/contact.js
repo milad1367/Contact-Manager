@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
-
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import EditContactModal from './EditContactModal';
 import { Mutation } from 'react-apollo';
-
-
-
 const OPEN_EDIT_MODAL = gql`
   mutation  OpenEditModal($id: Int!) {
     openEditModal (id: $id) @client
@@ -20,15 +14,13 @@ const DELETE_CONTACT = gql`
 class Contact extends Component{
 	render() {
 		var contact = this.props.contact;
-		console.log(contact);
 		var id = contact.id;
-        //<a href="#" onClick={this._openEditModal} className="secondary-content">  <i className="material-icons">edit</i></a>
 		return(
 			  <div className="row">
 				  <div className="col-xl-8 col-xs-12">
 						<div className="row">
 						  <div className="col-xl-3 col-xs-12">
-							  <img className="rounded-circle"  src={process.env.PUBLIC_URL + contact.img}  />
+							  <img className="rounded-circle" alt="avatar"  src={process.env.PUBLIC_URL + contact.img}  />
 							</div>
 							<div className="col-xl-8 col-xs-12">
 								<div className="mt-4">

@@ -43,7 +43,6 @@ class EditContactModal extends React.Component {
     }
     hideModal = () => {
       $(this.modal.current).modal('hide');
-      console.log("in hide");
     }
     showModal = () => {
         $(this.modal.current).modal('show');
@@ -124,7 +123,7 @@ class EditContactModal extends React.Component {
                                             <Mutation mutation={EDIT_CONTACT}>
                                             {editContact => {
                                                 return (
-                                                    <a onClick={() => {
+                                                    <button type="button"  onClick={() => {
                                                         if(this.checkValidate()) { 
                                                             editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
                                                             this.hideModal();
@@ -132,7 +131,7 @@ class EditContactModal extends React.Component {
                                                         return false
                                                         }
                                                     }  
-                                                    className="btn btn-primary">Save changes</a>
+                                                    className="btn btn-primary">Save changes</button>
                                                 )      
                                             }}
                                             

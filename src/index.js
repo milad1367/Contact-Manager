@@ -4,12 +4,11 @@ import './index.css';
 import App from './components/App';
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import * as serviceWorker from './serviceWorker'
-import gql from 'graphql-tag';
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { resolvers, defaults } from './resolvers';
 import { withClientState } from 'apollo-link-state';
+import * as serviceWorker from './serviceWorker'
+
 const typeDefs = `
 
 `;

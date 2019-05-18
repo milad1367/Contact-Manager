@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import {Modal} from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
@@ -113,7 +111,7 @@ class AddNewContact extends Component {
                   <Mutation mutation={ADD_CONTACT}>
                   {addContact => {
                     return (
-                      <a className="btn btn-primary" onClick={(e) => { 
+                      <button type="button" className="btn btn-primary" onClick={(e) => { 
                           e.preventDefault();
                           if(this.checkValidate()) {
                             addContact({variables: {name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
@@ -125,7 +123,7 @@ class AddNewContact extends Component {
 
                         }}  
                         >Save changes
-                      </a>
+                      </button>
                     )      
                   }}
                   </Mutation>

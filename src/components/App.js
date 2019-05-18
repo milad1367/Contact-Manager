@@ -3,7 +3,6 @@ import '../App.css';
 import  ContactList  from './ContactList';
 import EditContactModal from './EditContactModal';
 import AddNewContact from './AddNewContact';
-import Test from './Test.js';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
