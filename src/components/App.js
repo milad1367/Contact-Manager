@@ -25,6 +25,7 @@ class App extends Component {
       <div>
         <AddNewContact />
         <EditContactModal /> 
+        
         <Query query= {Get_Contacts}>
            {({loading,error,data}) => {
              if (loading) {

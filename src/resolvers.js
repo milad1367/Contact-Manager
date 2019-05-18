@@ -49,7 +49,6 @@ export const resolvers = {
           }
         `;
         const _selectedContact = cache.readFragment({fragment,id});
-        console.log(_selectedContact);
         cache.writeData({data:{showEditModal: true,selectedContact: _selectedContact }});
         return true
         
@@ -89,7 +88,6 @@ export const resolvers = {
       },
       editContact: (parent,variables, {cache}) => {
           const id = `ContactItem:${variables.id}`;
-          console.log("log",variables);
           const fragment = gql`
           fragment selectedContact on ContactItem {
               id
@@ -121,7 +119,6 @@ export const resolvers = {
         const prevContacts = cache.readQuery({query});
         const contacts = prevContacts.contacts;
         const newData = contacts.filter(item => item.id !== variables.id);
-        console.log(newData);
         const data = {
           contacts: newData,
 
