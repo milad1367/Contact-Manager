@@ -25,12 +25,12 @@ class Contact extends Component{
         //<a href="#" onClick={this._openEditModal} className="secondary-content">  <i className="material-icons">edit</i></a>
 		return(
 			  <div className="row">
-				  <div className="col-8">
+				  <div className="col-xl-8 col-xs-12">
 						<div className="row">
-						  <div className="col-3">
+						  <div className="col-xl-3 col-xs-12">
 							  <img className="rounded-circle"  src={process.env.PUBLIC_URL + contact.img}  />
 							</div>
-							<div className="col-8">
+							<div className="col-xl-8 col-xs-12">
 								<div className="mt-4">
 									<span className="font-weight-bold">{contact.name}</span>
 									<p>
@@ -41,7 +41,7 @@ class Contact extends Component{
 							</div>
 						</div>
 					</div>
-					<div className="col-4 text-right">
+					<div className="col-xl-4 col-xs-12 text-right">
 					  <div className="row text-right">
 						  <div className="col-12">
 								<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>

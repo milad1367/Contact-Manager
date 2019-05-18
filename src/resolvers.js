@@ -73,17 +73,19 @@ export const resolvers = {
         const img = 'images/faces/' + Math.floor(Math.random() * (15-1) + 1) + '.jpg';
 
         const previous = cache.readQuery({query});
-        const newId = 1;
+        let newId = 1;
         if(previous.contacts.length) {
            newId = previous.contacts[previous.contacts.length - 1].id + 1 ;
         }
+
         const newContact = { id: newId, name,phone,email,img, __typename: 'ContactItem' };
+
         const data = {
           contacts: [...previous.contacts,newContact],
 
         };
         cache.writeQuery({query, data});
-        
+      
       },
       editContact: (parent,variables, {cache}) => {
           const id = `ContactItem:${variables.id}`;

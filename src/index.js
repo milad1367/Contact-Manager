@@ -19,17 +19,10 @@ const client = new ApolloClient({
   link: withClientState({ resolvers, defaults, cache, typeDefs }),
 });
 
-
-  const query = gql`
-  query test {
-    showEditModal @client 
-    
-  }
-`;
-  let previous = cache.readQuery({ query });
-  console.log(previous);
 ReactDOM.render(<ApolloProvider client={client}>
-                    <App />
+                   <div className="container">
+                     <App />
+                  </div>
                 </ApolloProvider>, 
     document.getElementById('root'));
 
