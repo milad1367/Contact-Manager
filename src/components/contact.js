@@ -12,6 +12,11 @@ const OPEN_EDIT_MODAL = gql`
     openEditModal (id: $id) @client
   }
 `;
+const DELETE_CONTACT = gql`
+  mutation  DeleteContact($id: Int!) {
+    deleteContact (id: $id) @client
+  }
+`;
 class Contact extends Component{
 	render() {
 		var contact = this.props.contact;
@@ -37,15 +42,30 @@ class Contact extends Component{
 						</div>
 					</div>
 					<div className="col-4 text-right">
-						<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>
-							{openEditModal => (
-							<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#editContactModal"
-								onClick={openEditModal} 
-							>
-								Edit Contact
-							</button>
-							)}
-						</Mutation>
+					  <div className="row text-right">
+						  <div className="col-12">
+								<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>
+									{openEditModal => (
+									<button type="button" className="btn btn-primary mr-2" data-toggle="modal" data-target="#editContactModal"
+										onClick={openEditModal} 
+									>
+									  <span><i className="fas fa-external-link-alt"></i></span>
+                    <span><strong>Edit</strong></span> 
+									</button>
+									)}
+								</Mutation>
+							  <Mutation mutation={DELETE_CONTACT} variables={{ id }}>
+									{deleteContact => (
+									<button type="button"  className="btn btn-danger"
+										onClick={deleteContact} 
+									>
+										<span aria-hidden="true"><i className="fas fa-trash-alt"></i></span>
+										<span><strong>Delete</strong></span>   
+									</button>
+									)}
+								</Mutation>
+								</div>
+						</div>
 					</div>
 				</div>
 		);

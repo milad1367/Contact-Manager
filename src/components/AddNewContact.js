@@ -67,8 +67,10 @@ class AddNewContact extends Component {
     return (
 
       <div className="my-5">
-        <button type="button" onClick={this.openModal} className="btn btn-success">Add New Contact</button>
-        
+        <button type="button" onClick={this.openModal} className="btn btn-success">
+          <span aria-hidden="true"><i className="fas fa-user-plus"></i></span>
+          <span><strong>Add</strong></span>     
+        </button>
         <Modal show={this.state.showModal} onHide={this.closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Contact</Modal.Title>
