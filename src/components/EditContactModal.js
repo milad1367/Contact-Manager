@@ -41,7 +41,13 @@ class EditContactModal extends React.Component {
             phoneAlert: false
           }
     }
-    hideModal = () => {
+    hideModal = (selectedContact) => {
+      if(selectedContact) {
+        this.inputName.current.value = selectedContact.name;
+        this.inputPhone.current.value = selectedContact.phone;
+        this.inputEmail.current.value = selectedContact.email;
+
+      }
       $(this.modal.current).modal('hide');
     }
     showModal = () => {
@@ -119,7 +125,7 @@ class EditContactModal extends React.Component {
                                             </div>
                                         </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" onClick={() => {this.hideModal(data.selectedContact)}} className="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <Mutation mutation={EDIT_CONTACT}>
                                             {editContact => {
                                                 return (
