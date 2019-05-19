@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 const OPEN_EDIT_MODAL = gql`
@@ -11,10 +11,8 @@ const DELETE_CONTACT = gql`
     deleteContact (id: $id) @client
   }
 `;
-class Contact extends Component{
-	render() {
-		var contact = this.props.contact;
-		var id = contact.id;
+const Contact = ({ contact }) => {
+    const id = contact.id;
 		return(
 			  <div className="row">
 				  <div className="col-xl-8 col-xs-12">
@@ -63,7 +61,6 @@ class Contact extends Component{
 		);
 	
 	}
-	
-};
+
 
 export default  Contact;
