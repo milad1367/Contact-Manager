@@ -31,8 +31,6 @@ class EditContactModal extends React.Component {
         this.inputPhone = React.createRef();
         this.inputEmail = React.createRef();
         this.modal = React.createRef();
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
         this.checkValidate = this.checkValidate.bind(this);
 
         this.state = {
@@ -130,11 +128,10 @@ class EditContactModal extends React.Component {
                                             {editContact => {
                                                 return (
                                                     <button type="button"  onClick={() => {
-                                                        if(this.checkValidate()) { 
-                                                            editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
-                                                            this.hideModal();
-                                                        }
-                                                        return false
+                                                            if(this.checkValidate()) { 
+                                                                editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
+                                                                this.hideModal();
+                                                            }
                                                         }
                                                     }  
                                                     className="btn btn-primary">Save changes</button>
