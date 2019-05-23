@@ -50,7 +50,7 @@ export const resolvers = {
         `;
         const _selectedContact = cache.readFragment({fragment,id});
         cache.writeData({data:{showEditModal: true,selectedContact: _selectedContact }});
-        return true
+        return null
         
       },
       addContact: (parent,variables, {cache}) => {
