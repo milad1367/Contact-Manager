@@ -37,7 +37,10 @@ const Contact = ({ contact }) => {
 								<Mutation mutation={OPEN_EDIT_MODAL} variables={{ id }}>
 									{openEditModal => (
 									<button type="button" className="btn btn-primary mr-2" data-toggle="modal" data-target="#editContactModal"
-										onClick={openEditModal} 
+										onClick={e=> {
+											e.preventDefault();
+											openEditModal();
+										}} 
 									>
 									  <span><i className="fas fa-external-link-alt"></i></span>
                     <span><strong>Edit</strong></span> 
@@ -47,7 +50,10 @@ const Contact = ({ contact }) => {
 							  <Mutation mutation={DELETE_CONTACT} variables={{ id }}>
 									{deleteContact => (
 									<button type="button"  className="btn btn-danger"
-										onClick={deleteContact} 
+										onClick={e => {
+											e.preventDefault();
+											deleteContact();
+										}} 
 									>
 										<span aria-hidden="true"><i className="fas fa-trash-alt"></i></span>
 										<span><strong>Delete</strong></span>   
