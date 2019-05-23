@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 const $ = window.$;
 
-const MODAL_QUERY = gql`
+const EDIT_MODAL_INFO = gql`
   query {
       showEditModal @client
       selectedContact @client {
@@ -32,24 +32,19 @@ class EditContactModal extends React.Component {
         this.inputEmail = React.createRef();
         this.modal = React.createRef();
         this.checkValidate = this.checkValidate.bind(this);
-
         this.state = {
             nameAlert: false,
             emailAlert: false,
             phoneAlert: false
-          }
+        }
     }
     hideModal = (selectedContact) => {
-      if(selectedContact) {
-        this.inputName.current.value = selectedContact.name;
-        this.inputPhone.current.value = selectedContact.phone;
-        this.inputEmail.current.value = selectedContact.email;
-
-      }
-      $(this.modal.current).modal('hide');
-    }
-    showModal = () => {
-        $(this.modal.current).modal('show');
+        if(selectedContact) {
+            this.inputName.current.value = selectedContact.name;
+            this.inputPhone.current.value = selectedContact.phone;
+            this.inputEmail.current.value = selectedContact.email;
+        }
+        $(this.modal.current).modal('hide');
     }
     checkValidate() {
         var isValid = true;
@@ -77,7 +72,7 @@ class EditContactModal extends React.Component {
         return (
             <div className="modal fade" id="editContactModal" ref={this.modal} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" data-keyboard="false" data-backdrop="static" aria-hidden="true">
                 <div className="modal-dialog" role="document">
-                    <Query query={MODAL_QUERY}>
+                    <Query query={EDIT_MODAL_INFO}>
                         {
                             ({ loading, error, data }) => {
                                 if (loading) return "loading...";
@@ -87,8 +82,12 @@ class EditContactModal extends React.Component {
                                 <div className="modal-content">
                                     <div className="modal-header">
                                         <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                        <button onClick={()=>(this.hideModal(data.selectedContact))} type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <button onClick={ e => {
+                                                    e.preventDefault();
+                                                    this.hideModal(data.selectedContact);
+                                                    }} 
+                                                type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <form key={data.selectedContact.id}>
@@ -125,19 +124,19 @@ class EditContactModal extends React.Component {
                                         <div className="modal-footer">
                                             <button type="button" onClick={() => {this.hideModal(data.selectedContact)}} className="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <Mutation mutation={EDIT_CONTACT}>
-                                            {editContact => {
-                                                return (
-                                                    <button type="button"  onClick={() => {
-                                                            if(this.checkValidate()) { 
-                                                                editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
-                                                                this.hideModal();
-                                                            }
-                                                        }
-                                                    }  
-                                                    className="btn btn-primary">Save changes</button>
-                                                )      
-                                            }}
-                                            
+                                                {editContact => {
+                                                    return (
+                                                        <button className="btn btn-primary" type="button"  
+                                                            onClick={ e => {
+                                                                e.preventDefault();
+                                                                if(this.checkValidate()) { 
+                                                                    editContact({variables: {id: data.selectedContact.id,name: this.inputName.current.value,phone: this.inputPhone.current.value,email: this.inputEmail.current.value }});
+                                                                    this.hideModal();
+                                                                }
+                                                            }}
+                                                        >Save changes</button>
+                                                    )      
+                                                }}
                                             </Mutation>
                                         </div>
                                     </form>
