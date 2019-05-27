@@ -9,15 +9,27 @@ The project dependencies are not included in this repository. To install all the
 ```bash
 
 npm install
+```
+```bash
 npm start
 ```
+
 
 
 ## Deployment
 ### if you want deploy project:
 I use node js with express js for run the build file in local ,you can see it in server folder
 follow these steps : 
-### `npm run build`
-### ` cd server`
-### `node index.js`
-### you can see result in : http://localhost:9000/
+```bash
+npm run build
+```
+```bash 
+cd server
+```
+```bash
+npm install
+```
+```bash 
+node index.js
+```
+#### you can see result in : http://localhost:9000/
