@@ -1,6 +1,6 @@
 ## Contact-Manager
 
-This is a simple Contact Manager created as a practice with  React architecture and using apollo client for <a  href="https://medium.com/dailyjs/comparison-of-state-management-solutions-for-react-2161a0b4af7b" target="_blank">state managment </a>  insted <a href="https://redux.js.org/" target="_blank">redux</a>. Feel free to fork and play around with it.
+This is a simple Contact Manager created as a practice with  React architecture and using apollo client for <a  href="https://medium.com/dailyjs/comparison-of-state-management-solutions-for-react-2161a0b4af7b">state managment </a>  insted <a href="https://redux.js.org/">redux</a>. Feel free to fork and play around with it.
 ## Demo
 https://react-apollo-contact-manager.herokuapp.com/
 
