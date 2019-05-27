@@ -6,8 +6,11 @@ https://react-apollo-contact-manager.herokuapp.com/
 
 ## Quickstart 
 The project dependencies are not included in this repository. To install all the dependencies you will need NPM. Run this command in the main directory:
-### `npm install`
-### `npm start`
+```bash
+
+npm install
+npm start
+```
 
 
 ## Deployment
